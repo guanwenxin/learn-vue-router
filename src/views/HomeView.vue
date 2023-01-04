@@ -69,7 +69,7 @@ export default {
       // 提供 isAuthenticated
       // TODO: 网络请求
       const token = await getToken()
-      await sessionStorage.setItem('token', token)
+      sessionStorage.setItem('token', token)
 
       this.$router.push({ path: `main/${this.form.name}`, query: { email: this.form.email } })
       // router.push({path: 'about'})

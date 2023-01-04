@@ -27,6 +27,14 @@ export default {
   mounted() {
     // console.log('main组件', store)
     // console.log(this.$route)
+  },
+  beforeRouteLeave(to, from, next) {
+    const answer = window.confirm('Do you really want to leave? you have unsaved changes!')
+    if (answer) {
+      next()
+    } else {
+      next(false)
+    }
   }
 }
 </script>
