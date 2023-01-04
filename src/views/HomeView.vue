@@ -31,6 +31,7 @@
 
 <script>
 // import { store } from '@/utils/store'
+import { getToken } from '@/utils/store'
 export default {
   // 预定义属性
   name: 'HomeView',
@@ -62,9 +63,14 @@ export default {
   },
   // 方法
   methods: {
-    login() {
-      // TODO: 跳转至主页面
+    async login() {
+       // TODO: 跳转至主页面
       console.log(this.$router)
+      // 提供 isAuthenticated
+      // TODO: 网络请求
+      const token = await getToken()
+      await sessionStorage.setItem('token', token)
+
       this.$router.push({ path: `main/${this.form.name}`, query: { email: this.form.email } })
       // router.push({path: 'about'})
       // store.push(this.form)

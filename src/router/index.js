@@ -42,4 +42,14 @@ const router = new VueRouter({
   routes: routesArr
 })
 
+const isAuthenticated = sessionStorage.getItem('token')
+
+router.beforeEach((to, from, next) => {
+  // next在所有逻辑分支中只能且必须调用一次
+  // ...next()
+  if (to.fullPath !== '/' && !isAuthenticated) { next('/') }
+  else next()
+})
+
+
 export default router
