@@ -1,17 +1,33 @@
 <template>
     <div class="default" ref="default" @scroll="setButton($event, '哈哈哈')">
-        <div ref="top">默认导航栏,tab1</div>
-        <div style="height: 1000px; backgroud-color: red;">
+        <div ref="top">
+            <tab-header :title="msg" color="red"/>
+            <tab-header title="这是第二个父亲传递的" color="green"/>
+        </div>
+        <div class="body">
+            <tab-body>
+                <h1>这里就是默认的位置</h1>
+                <template v-slot:header>
+                    <h1>如果是红色，那说明成功了</h1>
+                </template>
+            </tab-body>
         </div>
         <div v-show="needTopBtn" class="back"><el-button type="primary" @click="returnTop">回顶部</el-button></div>
     </div>
 </template>
 <script>
+import TabHeader from './TabHeader.vue'
+import TabBody from './TabBody.vue'
 export default {
     name: 'DefaultTab',
+    components: {
+        TabHeader,
+        TabBody,
+    },
     data: function() {
         return {
             needTopBtn: false,
+            msg: '我来设置子组件的头部'
         }
     },
     mounted() {
