@@ -1,30 +1,43 @@
 <template>
     <div class="default" ref="default" @scroll="setButton($event, '哈哈哈')">
         <div ref="top">
-            <tab-header :title="msg" color="red" />
-            <tab-header title="这是第二个父亲传递的" color="green" />
+            <!-- <tab-header :title="msg" color="red" />
+            <tab-header title="这是第二个父亲传递的" color="green" /> -->
+            <main-title>
+                今日天气信息
+                <template v-slot:sub>
+                    野心和实力是对等的，在没有实力的时候谈野心，前方等待你的只会是万劫不复。
+                </template>
+            </main-title>
+            <!-- <tab-header :title="msg" color="red" />
+            <tab-header title="这是第二个父亲传递的" color="green" /> -->
         </div>
         <div class="body">
-            <tab-body>
-                <!-- <template v-slot:header="slotProp">
+            <main-body></main-body>
+            <!-- <tab-body>
+                <template v-slot:header="slotProp">
                     <h1>{{ slotProp.user.name }}</h1>
-                </template> -->
+                </template>
                 <template v-slot:header="{ user }">
                     <h1>{{ user.name }}</h1>
                 </template>
-            </tab-body>
+            </tab-body> -->
         </div>
         <div v-show="needTopBtn" class="back"><el-button type="primary" @click="returnTop">回顶部</el-button></div>
     </div>
 </template>
 <script>
-import TabHeader from './TabHeader.vue'
-import TabBody from './TabBody.vue'
+// import TabHeader from './TabHeader.vue'
+// import TabBody from './TabBody.vue'
+import MainTitle from './MainTitle.vue'
+import MainBody from './MainBody.vue'
 export default {
     name: 'DefaultTab',
     components: {
-        TabHeader,
-        TabBody,
+        // TabHeader,
+        // TabBody,
+        MainTitle,
+        MainBody
     },
     data: function () {
         return {
@@ -77,5 +90,6 @@ export default {
 .default {
     height: 100%;
     overflow-y: auto;
+    padding: 0 20px;
 }
 </style>
