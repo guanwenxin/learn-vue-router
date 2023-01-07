@@ -1,14 +1,16 @@
 <template>
     <div class="default" ref="default" @scroll="setButton($event, '哈哈哈')">
         <div ref="top">
-            <tab-header :title="msg" color="red"/>
-            <tab-header title="这是第二个父亲传递的" color="green"/>
+            <tab-header :title="msg" color="red" />
+            <tab-header title="这是第二个父亲传递的" color="green" />
         </div>
         <div class="body">
             <tab-body>
-                <h1>这里就是默认的位置</h1>
-                <template v-slot:header>
-                    <h1>如果是红色，那说明成功了</h1>
+                <!-- <template v-slot:header="slotProp">
+                    <h1>{{ slotProp.user.name }}</h1>
+                </template> -->
+                <template v-slot:header="{ user }">
+                    <h1>{{ user.name }}</h1>
                 </template>
             </tab-body>
         </div>
@@ -24,10 +26,10 @@ export default {
         TabHeader,
         TabBody,
     },
-    data: function() {
+    data: function () {
         return {
             needTopBtn: false,
-            msg: '我来设置子组件的头部'
+            msg: '这是绑定在slot当中的父组件的变量'
         }
     },
     mounted() {
