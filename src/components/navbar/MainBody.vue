@@ -9,7 +9,7 @@
             <el-table-column prop="property" label="key值"></el-table-column>
             <el-table-column prop="value" label="现状">
                 <template v-slot:default="scope">
-                    <img :src="scope.row.value" v-if="scope.row.property === 'img'" />
+                    <img :src="imgFormatByPublic(scope.row.value)" v-if="scope.row.property === 'img'" />
                     <div v-else>{{ scope.row.value }}</div>
                 </template>
             </el-table-column>
@@ -31,10 +31,19 @@ export default {
     data: function () {
         return {
             tableData: [],
-            city: ''
+            city: '',
+            // 如果以变量的形式传递路径，并且路径在src/assets下，需要将
+            // 路径用require包裹
+            imgUrl: require('@/assets/weather-img/0.png')
         }
     },
     methods: {
+        imgFormat(imgNum) {
+            return require(`@/assets/weather-img/${imgNum}.png`)
+        },
+        imgFormatByPublic(imgNum) {
+            return `/weather-img/${imgNum}.png`
+        },
         view(scope) {
             console.log(scope)
             return '啦啦啦'
@@ -44,12 +53,14 @@ export default {
             const removeKey = ['index', 'aqi', 'daily', 'hourly', 'week']
             const { data } = await http.get('/weather/query', { params: { city: this.city } });
             console.log(data.result)
+            const tmp = []
             Object.entries(data.result).forEach(([key, value]) => {
                 console.log(key, value)
                 if (!removeKey.includes(key)) {
-                    this.tableData.push({ property: key, value, name: keyMap[key] || '待完成' })
+                    tmp.push({ property: key, value, name: keyMap[key] || '待完成' })
                 }
             })
+            this.tableData = tmp;
         }
     }
 }
