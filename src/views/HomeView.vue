@@ -28,6 +28,8 @@
               <!-- <el-option label="中文站" value="zh"></el-option>
               <el-option label="英文站" value="en"></el-option> -->
             </el-select>
+              <el-date-picker v-model="date" type="date" placeholder="选择日期">
+            </el-date-picker>
           </div>
         </div>
       </div>
@@ -49,6 +51,7 @@ export default {
         email: '',
         passwd: '',
       },
+      date: '',
       isShowChild: true,
       pInfo: '这是用来设置默认的input框的值',
       langArr: [
@@ -76,7 +79,7 @@ export default {
   methods: {
     changeLang(lang) {
       console.log(this.$i18n.locale, this.$root.$i18n.locale)
-      this.$root.$i18n.locale = lang
+      this.$i18n.locale = lang
       // TODO: 更改国际化语言
     },
     async login() {
