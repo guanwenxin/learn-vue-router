@@ -4,7 +4,7 @@
             <!-- <tab-header :title="msg" color="red" />
             <tab-header title="这是第二个父亲传递的" color="green" /> -->
             <main-title>
-                今日天气信息
+                今日天气信息{{ globalData.getter('token') }}
                 <template v-slot:sub>
                     野心和实力是对等的，在没有实力的时候谈野心，前方等待你的只会是万劫不复。
                 </template>
@@ -31,6 +31,7 @@
 // import TabBody from './TabBody.vue'
 import MainTitle from './MainTitle.vue'
 import MainBody from './MainBody.vue'
+import { state } from '@/store/index'
 export default {
     name: 'DefaultTab',
     components: {
@@ -42,10 +43,12 @@ export default {
     data: function () {
         return {
             needTopBtn: false,
-            msg: '这是绑定在slot当中的父组件的变量'
+            msg: '这是绑定在slot当中的父组件的变量',
+            globalData: state,
         }
     },
     mounted() {
+        console.log(this.globalData)
         // 原生的事件绑定
         // this.$refs.default.addEventListener('scroll', this.setButton)
         // this.$refs.default.onscroll = this.setButton

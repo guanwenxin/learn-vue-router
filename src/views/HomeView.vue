@@ -30,6 +30,8 @@
             </el-select>
               <el-date-picker v-model="date" type="date" placeholder="选择日期">
             </el-date-picker>
+             <!-- <el-input v-model="globalData.token"></el-input> -->
+             {{ globalData.getter('token') }}
           </div>
         </div>
       </div>
@@ -40,6 +42,8 @@
 <script>
 // import { store } from '@/utils/store'
 import { getToken } from '@/utils/store'
+import { state } from '@/store/index'
+
 export default {
   // 预定义属性
   name: 'HomeView',
@@ -58,8 +62,13 @@ export default {
         { label: '中文站', value: 'zh' },
         { label: '英文站', value: 'en' }
       ],
-      selectedLang: ''
+      selectedLang: '',
+      globalData: state
     }
+  },
+  mounted() {
+    console.log(this.globalData)
+    setTimeout(() => this.globalData.commit('token', 'vuex', 'HomeView'), 4000)
   },
   destroyed() {
     console.log('销毁了')
