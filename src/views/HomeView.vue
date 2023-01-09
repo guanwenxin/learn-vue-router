@@ -63,7 +63,7 @@ export default {
         { label: '英文站', value: 'en' }
       ],
       selectedLang: '',
-      globalData: state
+      globalData: state // store模式具有响应式的原因
     }
   },
   mounted() {
