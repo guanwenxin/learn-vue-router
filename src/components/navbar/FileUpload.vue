@@ -8,11 +8,10 @@
                 <img :src="url" />
             </el-carousel-item>
         </el-carousel>
-        <hr/>
+        <hr />
         <el-button @click="openMulti">选择多个文件</el-button>
         <input multiple ref="multi" class="input-layout" type="file" @change="getMulFile($event)" />
-        <el-button @click="uploadMulti">点击上传{{ fileList.length }}文件</el-button>
-
+        <el-button @click="uploadMultiTogether">点击上传{{ fileList.length }}文件</el-button>
     </div>
 </template>
 <script>
@@ -28,6 +27,38 @@ export default {
         }
     },
     methods: {
+        // 序列化上传
+        async uploadMultiSeq() {
+            for (let i = 0; i < this.fileList.length; i++) {
+                const data = new FormData()
+                data.append('file', this.fileList[i])
+                const { data: result } = await http.post('/upload', /**放file文件 */data)
+                this.urls.push(result.data.netUrl)
+                console.log(result)
+            }
+            // 一次性上传
+        },
+        async uploadMultiTogether() {
+            // 没办法知道哪个请求最后完成
+            // this.fileList.forEach(async (file) => {
+            //     const data = new FormData()
+            //     data.append('file', file)
+            //     const { data: result } = await http.post('/upload', /**放file文件 */data)
+            //     this.urls.push(result.data.netUrl)
+            // })
+            // promise.all
+            const asyncTask = []
+            this.fileList.forEach((file) => {
+                const data = new FormData()
+                data.append('file', file)
+                // 好好思考
+                const task = http.post('/upload', /**放file文件 */data)
+                asyncTask.push(task)
+            })
+            const result = await Promise.all(asyncTask)
+            console.log(result)
+            //同时拿到两个netUrl
+        },
         async uploadMulti() {
             const allData = new FormData()
             this.fileList.forEach((file, index) => {
