@@ -1,8 +1,18 @@
 <template>
     <div>
-        <el-button @click="openInput">选择文件</el-button>
+        <el-button @click="openInput">选择单文件</el-button>
         <input ref="visible" class="input-layout" type="file" @change="getFileInfo($event)" />
         <el-button @click="upload">上传</el-button>
+        <el-carousel v-show="urls.length !== 0">
+            <el-carousel-item v-for="url in urls" :key="url">
+                <img :src="url" />
+            </el-carousel-item>
+        </el-carousel>
+        <hr/>
+        <el-button @click="openMulti">选择多个文件</el-button>
+        <input multiple ref="multi" class="input-layout" type="file" @change="getMulFile($event)" />
+        <el-button @click="uploadMulti">点击上传{{ fileList.length }}文件</el-button>
+
     </div>
 </template>
 <script>
@@ -13,9 +23,31 @@ export default {
         return {
             // 是一个File对象，继承自Blob
             file: null,
+            urls: [],
+            fileList: [],
         }
     },
     methods: {
+        async uploadMulti() {
+            const allData = new FormData()
+            this.fileList.forEach((file, index) => {
+                allData.append(`multi${index}`, file)
+            })
+            // 一次性上传
+            const { data: result } = await http.post('/upload/multi', /**放file文件 */allData)
+            this.urls = result.data.urls;
+        },
+        openMulti() {
+            this.$refs.multi.click();
+        },
+        getMulFile(event) {
+            console.log(typeof event.target.files[0])
+            console.log(event.target.files)
+            // array-like object
+            Array.prototype.forEach.call(event.target.files, file => this.fileList.push(file))
+            // event.target.files.forEach(file => this.fileList.push(file))
+            console.log(this.fileList)
+        },
         openInput() {
             this.$refs.visible.click();
         },
@@ -32,8 +64,9 @@ export default {
             // 此处的key file，是后端取文件信息时的key
             formData.append('file', this.file)
             // 3.直接将formdata 放置axios post方法的参数中
-            const result = await http.post('/upload', /**放file文件 */formData)
-            console.log(result)
+            const { data: result } = await http.post('/upload', /**放file文件 */formData)
+            console.log(result.data.netUrl)
+            this.urls.push(result.data.netUrl)
         }
     }
 }
