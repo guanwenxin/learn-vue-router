@@ -100,7 +100,9 @@ export default {
       const result = await http.post('/login', {username: this.form.name, password: this.form.passwd})
       const data = result.data;
       if (data.success) {
-        sessionStorage.setItem('token', 'token')
+        console.log(data)
+        const token = data.data.token;
+        sessionStorage.setItem('token', token)
         this.$router.push({ path: `main/${this.form.name}`, query: { email: this.form.email } })
       } else {
         this.$message('失败')

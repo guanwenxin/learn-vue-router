@@ -16,12 +16,17 @@
         <el-button @click="change">点我变更状态</el-button>
         sentence<div>{{ $store.state.sentence }}</div>
         <img v-for="(url, index) in imgUrls" :src="url" :key="index" />
+        <file-upload></file-upload>
     </div>
 </template>
 <script>
 import { mapGetters, mapMutations } from 'vuex'
+import FileUpload from './FileUpload.vue'
 export default {
     name: 'DataTab',
+    components: {
+        FileUpload
+    },
     data: function () {
         return {
             aimValue: ''
