@@ -11,6 +11,10 @@
                 <i class="el-icon-document"></i>
                 <span slot="title">数据管理</span>
             </el-menu-item>
+            <el-menu-item index="2">
+                <i class="el-icon-document"></i>
+                <span slot="title">用户管理</span>
+            </el-menu-item>
         </el-menu>
         <div class="aside-footer">@Copyright 2023</div>
     </div>
@@ -29,6 +33,7 @@ export default {
         const pathVal = this.$route.params.userId;
         this.routerMap.set('0', `/main/${pathVal}/default`)
         this.routerMap.set('1', `/main/${pathVal}/data`)
+        this.routerMap.set('2', `/main/${pathVal}/user`)
     },
     methods: {
         active(index) {

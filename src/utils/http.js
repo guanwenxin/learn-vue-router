@@ -13,6 +13,17 @@ const http = axios.create({
     // }
 })
 
+// 拦截器
+http.interceptors.request.use((config) => {
+    if (config.url === '/login') {
+        return config;
+    }
+    config.headers['token'] = sessionStorage.getItem('token')
+    console.log('interceptors', config)
+    return config;
+})
+
+
 export {
     http
 }

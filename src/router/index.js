@@ -4,6 +4,7 @@ import HomeView from '../views/HomeView.vue'
 import MainView from '../views/MainView.vue'
 import DefaultTab from '@/components/navbar/DefaultTab.vue'
 import DataTab from '@/components/navbar/DataTab.vue'
+import UserManage from '@/components/user/UserManage.vue'
 
 Vue.use(VueRouter)
 
@@ -25,6 +26,10 @@ const routesArr = [
         // UserProfile 将被渲染到 User 的 <router-view> 内部
         path: 'default',
         component: DefaultTab,
+      },
+      {
+        path: 'user',
+        component: UserManage,
       },
       {
         path: 'data',
