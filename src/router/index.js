@@ -52,6 +52,9 @@ router.beforeEach((to, from, next) => {
   // next在所有逻辑分支中只能且必须调用一次
   // ...next()
   const isAuthenticated = sessionStorage.getItem('token')
+  // 如果token存在&&token合法(授权认证)
+  // 1. 一个和服务端交互的请求都没有，守卫中需要和后端进行验证
+  // 2. 打开的页面中有与后端的请求（服务端都会校验token）
   if (to.fullPath !== '/' && !isAuthenticated) { next('/') }
   else next()
 })
